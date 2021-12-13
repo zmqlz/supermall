@@ -1,0 +1,74 @@
+<template v-slot:dropdown>
+  <tab-bar>
+    <tab-bar-item link="/home" activeColor="deepPink">
+    <!-- 代替 v-slot -->
+      <template v-slot:item-icon>
+        <img src="~assets/img/tabbar/home.svg" alt="" width="25"/>
+      </template>
+
+      <template #item-icon-active>
+        <img src="~assets/img/tabbar/home_active.svg" alt="" />
+      </template>
+
+      <template #item-text>
+        <div>首页</div>
+      </template>
+    </tab-bar-item>
+    <tab-bar-item link="/category" activeColor="deepPink">
+      <template #item-icon>
+        <img src="~assets/img/tabbar/category.svg" alt="" />
+      </template>
+
+      <template #item-icon-active>
+        <img src="~assets/img/tabbar/category_active.svg" alt="" />
+      </template>
+
+      <template #item-text>
+        <div>分类</div>
+      </template>
+    </tab-bar-item>
+    <tab-bar-item link="/shopcart" activeColor="deepPink">
+      <template #item-icon>
+        <img src="~assets/img/tabbar/shopcart.svg" alt="" />
+      </template>
+
+      <template #item-icon-active>
+        <img src="~assets/img/tabbar/shopcart_active.svg" alt="" />
+      </template>
+
+      <template #item-text>
+        <div>购物车</div>
+      </template>
+    </tab-bar-item>
+    <tab-bar-item link="/profile" activeColor="deepPink">
+      <template #item-icon>
+        <img src="~assets/img/tabbar/profile.svg" alt="" />
+      </template>
+
+      <template #item-icon-active>
+        <img src="~assets/img/tabbar/profile_active.svg" alt="" />
+      </template>
+
+      <template #item-text>
+        <div>我的</div>
+      </template>
+    </tab-bar-item>
+  </tab-bar>
+</template>
+
+<script>
+import TabBar from "components/common/tabbar/TabBar";
+import TabBarItem from "components/common/tabbar/TabBarItem"
+
+export default {
+  name: "MainTabBar",
+  components: {
+    TabBar,
+    TabBarItem,
+  },
+};
+</script>
+
+<style scoped>
+/* scoped  样式只在当前组件起作用 */
+</style>
