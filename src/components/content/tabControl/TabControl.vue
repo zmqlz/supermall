@@ -1,3 +1,5 @@
+<!-- 分类 -->
+
 <template>
   <div class="tab-control">
     <div
@@ -31,6 +33,7 @@ export default {
   methods: {
     itemClick(index) {
       this.currentIndex = index;
+      this.$emit("tabClick",index)
     },
   },
 };
