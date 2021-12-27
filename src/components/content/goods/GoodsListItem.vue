@@ -2,7 +2,8 @@
 
 <template>
   <div class="goods-item">
-    <img :src="goodsItem.show.img" alt="" />
+    <!-- @load  监听图片加载 -->
+    <img :src="goodsItem.show.img" @load="imgLoad" />
     <div class="goods-info">
       <P>{{ goodsItem.title }}</P>
       <span class="price">{{ goodsItem.price }}</span>
@@ -12,6 +13,8 @@
 </template>
 
 <script>
+import bus from "@/bus"
+
 export default {
   name: "GoodListItem",
   props: {
@@ -22,6 +25,12 @@ export default {
       },
     },
   },
+  methods:{
+    imgLoad() {
+      // 将孙字的事件传给爷(Home)
+      bus.$emit("itemImgLoad") 
+    }
+  }
 };
 </script>
 
