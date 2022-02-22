@@ -11,6 +11,8 @@ const Profile = () =>
     import ("views/profile/Profile")
 const ShopCart = () =>
     import ("views/shopcart/Shopcart")
+const Detail = () =>
+    import ("views/detail/Detail")
 
 const routes = [{
         path: "",
@@ -31,6 +33,10 @@ const routes = [{
     {
         path: "/profile",
         component: Profile
+    },
+    {
+        path: "/detail/:iid",
+        component: Detail
     }
 ]
 

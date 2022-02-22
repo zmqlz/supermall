@@ -5,6 +5,16 @@
       <template #center>购物车</template>
     </nav-bar>
 
+    <!-- 固定导航 -->
+    <tab-control
+      class="tab-control tabZIndex"
+      :titles="['精选', '新款', '精选']"
+      @tabClick="HtabClick"
+      ref="contentTab1"
+      :class="{ fixed: isTabShow }"
+      v-show="isTabShow"
+    />
+
     <!-- better-scroll框架 -->
     <scroll
       class="content"
@@ -29,7 +39,7 @@
         class="tab-control"
         :titles="['精选', '新款', '精选']"
         @tabClick="HtabClick"
-        ref="contentTab"
+        ref="contentTab2"
       />
       <!-- 商品列表 -->
       <goods-list :goods-list="showGoods" />
@@ -73,6 +83,9 @@ export default {
       currentType: "pop",
       isShowBackTop: false,
       tabOffsetTop: 0,
+      isTabShow: false,
+      saveY: 0,
+      itemImgListener:null,
     };
   },
   components: {
@@ -93,13 +106,38 @@ export default {
     this.MgetHomeGoods("new");
     this.MgetHomeGoods("sell");
   },
+  activated() {
+    this.$refs.scroll.ScrollTo(0, this.saveY, 0);
+    this.$refs.scroll.refresh();
+  },
+  deactivated() {
+    // 1. 保存Y值
+    this.saveY = this.$refs.scroll.getScrollY();
+    // console.log(this.saveY);
+
+    // 2. 取消全局事件的监听
+    bus.$off("itemImgLoad",this.itemImgListener)
+  },
+  unmounted() { //原型是destroyed
+   console.log("destroyed");
+  },
   mounted() {
-    // 监听GoodLostItem中的图片加载完成,解决可滚动区域的bug
+    // 监听GoodLostItem中的图片加载完成,解决可滚动区域的bug,防抖操作
     const refresh = debounce(this.$refs.scroll.refresh, 300);
-    bus.$on("itemImgLoad", () => {
-      // console.log("----");
+
+    // 第一种写法(建议用这种)
+    //  bus.$on("itemImgLoad",() => {
+    //   refresh(); //函数调用
+    //   // console.log("----");
+    //   });
+
+    // 第二种写法
+    // 对监听事件进行保存
+    this.itemImgListener= () => {
       refresh(); //函数调用
-    });
+      // console.log("----");
+      }
+    bus.$on("itemImgLoad",this.itemImgListener);
   },
   computed: {
     showGoods() {
@@ -124,6 +162,11 @@ export default {
           this.currentType = "sell";
           break;
       }
+
+      // 使两个 分类 的点击目标一致
+      // console.log(this.$refs.contentTab1.currentIndex);
+      this.$refs.contentTab1.currentIndex = index;
+      this.$refs.contentTab2.currentIndex = index;
     },
 
     backClick() {
@@ -131,7 +174,13 @@ export default {
     },
     homeScroll(position) {
       // console.log(position);
+
+      // console.log(position);
+      // 判断bsckTop是否显示
       this.isShowBackTop = -position.y > 1000;
+
+      // 判断是否吸顶
+      this.isTabShow = -position.y > this.tabOffsetTop;
     },
     homeLoadMore() {
       // console.log("上拉加载更多");
@@ -141,9 +190,9 @@ export default {
     swiperLoaded() {
       // 所有的组件都有一个属性$el:用于获取组件中的元素
 
-      this.tabOffsetTop = this.$refs.contentTab.$el.offsetTop;
-      console.log(this.tabOffsetTop);
-      console.log(this.$refs.hSwiper.$el.offsetTop);
+      this.tabOffsetTop = this.$refs.contentTab2.$el.offsetTop;
+      // console.log(this.tabOffsetTop);
+      // console.log(this.$refs.hSwiper.$el.offsetTop);
     },
 
     /**
@@ -187,19 +236,21 @@ export default {
 .home-nav {
   background-color: var(--color-tint); /*使用变量*/
   color: #fff;
-  position: fixed;
+
+  /* 在使用浏览器原生滚动时，为了让导航不跟谁一起滚动时使用 */
+  /* position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 10;
+  z-index: 10; */
 }
 
 /* 当top值到达44px时,属性就会变成fixed */
-.tab-control {
-  /* position: sticky; */
+/* .tab-control {
+  position: sticky;
   top: 44px;
   z-index: 10;
-}
+} */
 
 /* .content{
   height: 700px;
@@ -212,6 +263,11 @@ export default {
   bottom: 49px;
   right: 0;
   left: 0;
+}
+
+.tabZIndex {
+  position: relative;
+  z-index: 10;
 }
 
 /* .content{

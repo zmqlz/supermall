@@ -59,8 +59,11 @@ export default {
     refresh() {
       //refresh:重新计算 BetterScroll
       this.scroll && this.scroll.refresh();
-      console.log("----");
+      // console.log("----");
     },
+    getScrollY() {
+      return this.scroll?this.scroll.y:0;
+    }
   },
 };
 </script>

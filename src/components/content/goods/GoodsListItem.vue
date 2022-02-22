@@ -3,7 +3,7 @@
 <template>
   <div class="goods-item">
     <!-- @load  监听图片加载 -->
-    <img :src="goodsItem.show.img" @load="imgLoad" />
+    <img :src="showImage" @load="imgLoad" @click="itemClick" />
     <div class="goods-info">
       <P>{{ goodsItem.title }}</P>
       <span class="price">{{ goodsItem.price }}</span>
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import bus from "@/bus"
+import bus from "@/bus";
 
 export default {
   name: "GoodListItem",
@@ -25,11 +25,31 @@ export default {
       },
     },
   },
-  methods:{
+  methods: {
     imgLoad() {
-      // 将孙字的事件传给爷(Home)
-      bus.$emit("itemImgLoad") 
-    }
+      // 将孙子的事件传给爷(Home)
+      bus.$emit("itemImgLoad");  //第二种写法格式
+
+      // 第一种写法格式(建议第一种)
+      // if(this.$route.path.indexOf("./home")) {
+      //   bus.$emit("itemImgLoad")
+      // }else if (this.$route.path.indexOf("/detail")) {
+      //    bus.$emit("itemImgLoad")
+      // }
+    },
+    itemClick() {
+      // 将点击照片的iid拼接给detail路由
+      this.$router.push("/detail/" + this.goodsItem.iid);
+    },
+  },
+  computed: {
+    showImage() {
+      return this.goodsItem.image || this.goodsItem.show.img; //位置调换会报错
+    },
+  },
+  created() {
+    // console.log(true || undefined.aaa);   
+    // console.log(undefined.aaa || true);
   }
 };
 </script>
