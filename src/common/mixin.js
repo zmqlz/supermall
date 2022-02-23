@@ -18,6 +18,6 @@ export const itemListenerMixin = {
             // console.log("----");
         }
         bus.$on("itemImgLoad", this.itemImgListener);
-        console.log("我混入了");
+        // console.log("我混入了");
     }
 }

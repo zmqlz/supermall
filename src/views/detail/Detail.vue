@@ -1,7 +1,7 @@
 <template>
   <div id="detail">
     <!-- 导航栏 -->
-    <detail-nav-bar class="detail-top" />
+    <detail-nav-bar class="detail-top" @titleClick="selectIndex" />
     <scroll class="content" ref="scroll">
       <!-- 轮播图 -->
       <detail-swiper :top-images="topImages" />
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import bus from "@/bus"
 
 import DetailNavBar from "./childComponent/DetailNavBar";
 import DetailSwiper from "./childComponent/DetailSwiper";
@@ -49,7 +50,7 @@ export default {
       goodsInfo: {},
       params:{},
       comment:{},
-      recommends:{}
+      recommends:{},
     };
   },
   components: {
@@ -66,7 +67,11 @@ export default {
   methods: {
     DetailImgLoad() {
       this.$refs.scroll.refresh();
+      console.log("111");
     },
+    selectIndex(index) {
+      console.log(index);
+    }
   },
   created() {
     // 通过params方法获取保存当前路由的iid
@@ -105,8 +110,8 @@ export default {
     //2.商品推荐
       getRecommend().then(res=>{
         this.recommends = res.data.list;
-        console.log(res);
-        console.log( this.recommends);
+        // console.log(res);
+        // console.log( this.recommends);
       })
   },
   mounted() {
@@ -123,7 +128,8 @@ export default {
     // bus.$on("itemImgLoad",this.itemImgListener);
   },
   unmounted() {
-    bus.$off("itemImgLoad",this.itemImgListener)
+    bus.$off("itemImgLoad",this.itemImgListener);
+    // console.log("hhh");
   }
 };
 </script>

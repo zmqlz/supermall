@@ -8,7 +8,7 @@
     <!-- 固定导航 -->
     <tab-control
       class="tab-control tabZIndex"
-      :titles="['精选', '新款', '精选']"
+      :titles="['流行', '新款', '精选']"
       @tabClick="HtabClick"
       ref="contentTab1"
       :class="{ fixed: isTabShow }"
@@ -37,7 +37,7 @@
       <!-- 分类 -->
       <tab-control
         class="tab-control"
-        :titles="['精选', '新款', '精选']"
+        :titles="['流行', '新款', '精选']"
         @tabClick="HtabClick"
         ref="contentTab2"
       />
