@@ -1,5 +1,5 @@
-<template>
 <!-- 轮播图 -->
+<template>
   <div id="detail-swiper">
       <swiper class="swipers">
         <swiper-item v-for="(item, index) in topImages" :key="index">

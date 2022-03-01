@@ -1,5 +1,5 @@
+<!-- 商家信息 -->
 <template>
-  <!-- 商家信息 -->
   <div class="shop-info">
     <div class="shop-top">
       <img :src="shop.logo" />

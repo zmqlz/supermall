@@ -1,5 +1,5 @@
+<!-- 商品详细信息 -->
 <template>
-  <!-- 商品详细信息 -->
   <div v-if="Object.keys(detailInfo).length !== 0" class="goods-info">
     <div class="info-desc clear-fix">
       <div class="start"></div>
@@ -40,6 +40,7 @@ export default {
       // 判断所以图片已经加载完成后,在发送事件
       if (++this.counter === this.imagesLength) {
         this.$emit("imageLoad");
+        // console.log(this.counter);
       }
     },
   },

@@ -1,7 +1,7 @@
 <template v-slot:dropdown>
   <tab-bar>
     <tab-bar-item link="/home" activeColor="deepPink">
-    <!-- 代替 v-slot -->
+    <!-- 代替 v-slot 要用template包裹-->
       <template v-slot:item-icon>
         <img src="~assets/img/tabbar/home.svg" alt="" width="25"/>
       </template>

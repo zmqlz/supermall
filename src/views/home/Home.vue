@@ -2,7 +2,9 @@
   <div id="home">
     <!-- 顶部 -->
     <nav-bar class="home-nav">
-      <template #center>购物车</template>
+      <template #center>
+        <div>购物车</div>
+      </template>
     </nav-bar>
 
     <!-- 固定导航 -->

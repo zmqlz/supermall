@@ -1,5 +1,5 @@
-<template>
 <!-- 导航栏 -->
+<template>
   <nav-bar>
     <template v-slot:left>
       <div class="back" @click="backClick">
@@ -39,12 +39,15 @@ export default {
     titleClick(index) {
       this.currentIndex = index;
       this.$emit('titleClick', index);
-      console.log(111);
     },
     backClick() {
       this.$router.back();
     },
   },
+  mounted() {
+    
+    
+  }
 };
 </script>
 

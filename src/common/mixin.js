@@ -1,7 +1,10 @@
 import { debounce } from "./utlis"
 import bus from "@/bus"
 
+import BackTop from "components/content/backTop/BackTop";
+
 // 混入(methods,components也可以混入)
+// 不可以将methods中方法的一部分放在混入中否则会被覆盖,生命周期函数里可以
 export const itemListenerMixin = {
     data() {
         return {
@@ -19,5 +22,25 @@ export const itemListenerMixin = {
         }
         bus.$on("itemImgLoad", this.itemImgListener);
         // console.log("我混入了");
+    }
+}
+
+
+//将回到顶部的箭头进行混入
+export const backTop = {
+    data() {
+        return {
+            isShowBackTop: false,
+        }
+    },
+    components: {
+        BackTop
+    },
+    methods: {
+        backClick() {
+            this.$refs.scroll.ScrollTo(0, 0);
+        },
+
+
     }
 }

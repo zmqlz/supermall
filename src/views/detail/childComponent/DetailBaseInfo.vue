@@ -1,5 +1,5 @@
+ <!-- 商品介绍 不可以写在template下面 否则$refs无法获取到该组件-->
 <template>
-<!-- 商品介绍 -->
   <div v-if="Object.keys(goods).length !== 0" class="base-info">
     <div class="info-title">{{ goods.title }}</div>
     <div class="info-price">
