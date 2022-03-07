@@ -66,7 +66,7 @@ export default {
     },
   },
   methods: {
-    isUnCheckAll() {
+    isUnCheckAll() { //点击全选 让商品按钮全选或全不选
       if (this.isSelectAll) {
         this.cartList.forEach(item => item.checked = false)
       }else {
@@ -109,5 +109,8 @@ export default {
 
 .calculate {
   width: 90px;
+  background-color: red;
+  color: #fff;
+  text-align: center;
 }
 </style>

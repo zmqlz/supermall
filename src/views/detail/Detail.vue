@@ -22,6 +22,8 @@
     <back-top @click.native="backClick" v-show="isShowBackTop" />
     <!-- 底部工具栏(购物车) -->
     <detail-buttom-bar @addCart="addToCart" />
+    <!-- 加入或购买成功的弹框显示 -->
+    <toast :message="message" :show="show" />
   </div>
 </template>
 
@@ -39,8 +41,7 @@ import DetailButtomBar from "./childComponent/DetailButtomBar";
 
 import Scroll from "components/common/scroll/Scroll";
 import GoodsList from "components/content/goods/GoodsList";
-
-
+import Toast from "components/common/toast/Toast";
 
 import {
   getDetail,
@@ -52,24 +53,26 @@ import {
 import { debounce } from "common/utlis";
 
 // 混入中的方法
-import { itemListenerMixin,backTop } from "common/mixin";
+import { itemListenerMixin, backTop } from "common/mixin";
 
 export default {
   name: "detail",
-  mixins: [itemListenerMixin,backTop],
+  mixins: [itemListenerMixin, backTop],
   data() {
     return {
       iid: null,
       topImages: [],
       goods: {},
       shop: {},
-      goodsInfo: {}, 
+      goodsInfo: {},
       params: {},
       comment: {},
       recommends: {},
       themeTopsYs: [],
       getThemeTopY: null,
       currentIndex: 0,
+      message:"",
+      show:false
     };
   },
   components: {
@@ -83,6 +86,8 @@ export default {
     Scroll,
     GoodsList,
     DetailButtomBar,
+    Toast,
+
   },
   methods: {
     DetailImgLoad() {
@@ -175,14 +180,22 @@ export default {
       product.title = this.goods.title;
       product.desc = this.goods.desc;
       product.price = this.goods.realPrice;
-      product.iid = this.iid
+      product.iid = this.iid;
 
       // 2.将商品添加到购物车中
-      this.$store.dispatch("addCart",product)
+      this.$store.dispatch("addCart", product).then(res=> {
+        // console.log(product);
+        this.show = true;
+        this.message = "加入购物车成功";
 
-
-    }
-    
+        // 通过定时器清除 弹框显示
+        setTimeout(()=>{
+          this.show = false;
+          this.message = ""
+        },1500)
+        
+      });
+    },
   },
   created() {
     // 通过params方法获取保存当前路由的iid
